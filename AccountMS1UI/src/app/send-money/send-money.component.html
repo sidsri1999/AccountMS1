@@ -1,0 +1,38 @@
+<div>
+    <h1>Send Money</h1>
+    <form #sendMoneyForm="ngForm"  (ngSubmit)="sendMoney(sendMoneyForm)">
+        <div class="form-group">
+            <label>Enter Reciever Id : - </label>
+            <input type="text"  required class="form-control" #recId="ngModel" pattern="^\d{1,}$"
+            [class.is-invalid]="recId.invalid && recId.touched"
+            name="recieverAccountId" [(ngModel)]="id">
+            <div class="text-danger" *ngIf="recId.invalid && recId.touched">
+                <small *ngIf="recId.errors.required">Reciever Id is required</small>
+                <small *ngIf="recId.errors.pattern">Id must be numeric</small>
+            </div>
+            
+        </div>
+        <div class="form-group">
+            <label>Enter Amount : - </label>
+            <input type="text" required #amountField="ngModel" pattern="^[1-9][0-9]{0,4}$"
+            [class.is-invalid]="amountField.invalid && amountField.touched" class="form-control" name="amount" [(ngModel)]="amount">
+            <div class="text-danger" *ngIf="amountField.invalid && amountField.touched">
+                <small *ngIf="amountField.errors.required">Amount is required</small>
+                <small *ngIf="amountField.errors.pattern">Amount lies between 1 to 99,999 rupees</small>
+            </div>
+        </div>
+        
+        
+
+        <button type="submit">Submit</button>
+    </form>
+</div>
+<br>
+
+<div *ngIf="account!==null">
+    <h3>Money Transferred Successfully</h3>  
+    Current Amount {{account.accountBalance}}
+</div>
+<div *ngIf="flag">
+    {{errormsg}}
+</div>

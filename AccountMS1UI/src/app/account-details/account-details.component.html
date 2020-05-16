@@ -1,0 +1,10 @@
+<div *ngIf="!flag">
+    <h3>Account Details</h3>
+    Account Id : {{account.accountId}}<br>
+    Account Balance : {{account.accountBalance}} <br>
+    account Status : {{account.status}}
+</div>
+<div *ngIf="flag">
+    {{errormsg}}
+</div>
+

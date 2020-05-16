@@ -1,0 +1,9 @@
+<div *ngIf="!flag">
+    <h3>Account Details</h3>
+    User Id : {{user.userId}}<br>
+    User Name : {{user.userName}} <br>
+    User Phone Number : {{user.phoneNumber}} <br>
+</div>
+<div *ngIf="flag">
+    {{errormsg}}
+</div>

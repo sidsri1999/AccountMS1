@@ -1,0 +1,44 @@
+import { Injectable } from '@angular/core';
+import { Observable, observable } from 'rxjs';
+import { HttpClient } from '@angular/common/http';
+import { User } from '../model/user';
+
+@Injectable({
+  providedIn: 'root'
+})
+export class UserService {
+
+  client:HttpClient ;
+  constructor(client:HttpClient ){
+    this.client=client;
+  }
+
+   baseEmployeeUrl="http://localhost:8080/users";
+
+  addUser(user:User): Observable<User>{
+    console.log(user);
+    let url=this.baseEmployeeUrl+"/add";
+
+    let result:Observable<User>= this.client.post<User>(url,user);
+    console.log(result);
+    return result;
+  }
+
+  getUser(userId): Observable<User>{
+    console.log(userId);
+    let url=this.baseEmployeeUrl+"/"+userId;
+
+    let result:Observable<User>= this.client.get<User>(url);
+    console.log(result);
+    return result;
+  }
+
+  
+
+  getAllUserIds() : Observable<number[]>{
+    let url = this.baseEmployeeUrl + "/getalluserids";
+    let result:Observable<number[]>=this.client.get<number[]>(url);
+    return result;
+  }
+
+}

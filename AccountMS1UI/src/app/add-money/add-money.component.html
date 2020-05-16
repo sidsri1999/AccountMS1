@@ -1,0 +1,23 @@
+<div>
+    <h1>Add Money</h1>
+    <form #addMoneyForm="ngForm"  (ngSubmit)="addMoney(addMoneyForm)">
+        <div class="form-group">
+            <label>Enter Amount : - </label>
+            <input type="text" required #amountField="ngModel" pattern="^[1-9][0-9]{0,4}$"
+            [class.is-invalid]="amountField.invalid && amountField.touched" class="form-control" name="amount" ngModel>
+            <div class="text-danger" *ngIf="amountField.invalid && amountField.touched">
+                <small *ngIf="amountField.errors.required">Amount is required</small>
+                <small *ngIf="amountField.errors.pattern">Amount lies between 1 to 99,999 rupees</small>
+            </div>
+        </div>
+
+        <button type="submit">Submit</button>
+    </form>
+</div>
+<div *ngIf="account!==null">
+    <h3>Amount Added Successfully</h3>  
+    Current Amount {{account.accountBalance}}
+</div>
+<div *ngIf="flag">
+    {{errormsg}}
+</div>

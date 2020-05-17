@@ -17,9 +17,9 @@ export class UserDetailsComponent implements OnInit {
 
   constructor(private userService : UserService,private route : ActivatedRoute) {
   }
-  user : User;
+  user : User = null;
   ngOnInit(): void {
-
+      console.log("Hello");
       this.route.paramMap.subscribe((params : ParamMap) => {
         let id1= parseInt(params.get('id'));
         this.id = id1;

@@ -15,7 +15,7 @@ export class AddMoneyComponent implements OnInit {
   accountService : AccountService ;
   public userId;
   transaction : Transaction = null;
-  account : Account;
+  account : Account = null ;
   public flag : boolean = false;
   public errormsg : String;
 
@@ -37,7 +37,8 @@ export class AddMoneyComponent implements OnInit {
         let amount=details.amount;
         this.transaction=new Transaction();
         this.transaction.amount = amount;
-        
+        this.account = null;
+        this.flag = false;
         
         let result : Observable <Account>=this.accountService.addMoney(this.userId,this.transaction); 
         result.subscribe(( account : Account ) => {

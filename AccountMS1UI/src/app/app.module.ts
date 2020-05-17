@@ -11,6 +11,8 @@ import { UserDetailsComponent } from './user-details/user-details.component';
 import { AccountDetailsComponent } from './account-details/account-details.component';
 import { AddMoneyComponent } from './add-money/add-money.component';
 import { SendMoneyComponent } from './send-money/send-money.component';
+import { UserHomeComponent } from './user-home/user-home.component';
+import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
 
 @NgModule({
   declarations: [
@@ -21,6 +23,8 @@ import { SendMoneyComponent } from './send-money/send-money.component';
     AccountDetailsComponent,
     AddMoneyComponent,
     SendMoneyComponent,
+    UserHomeComponent,
+    PageNotFoundComponent,
   ],
   imports: [
     BrowserModule,

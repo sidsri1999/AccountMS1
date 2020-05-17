@@ -1,6 +1,59 @@
-<div>
+<div style="text-align: center;">
+    <br><h3>Send Money</h3><br>
+</div>
+<form #sendMoneyForm="ngForm"  (ngSubmit)="sendMoney(sendMoneyForm)" novalidate>
+<table class="table table-borderless" style="margin: auto;width: 50% !important; ">
+    <tbody>
+      <tr>
+        <td scope="row">Enter Reciever Id : </td>
+        <td>
+            <div class="form-group">
+                <input type="text"  required class="form-control" #recId="ngModel" pattern="^\d{1,}$"
+                [class.is-invalid]="recId.invalid && recId.touched"
+                name="recieverAccountId" [(ngModel)]="id">
+                <div class="text-danger" *ngIf="recId.invalid && recId.touched">
+                    <small *ngIf="recId.errors.required">Reciever Id is required</small>
+                    <small *ngIf="recId.errors.pattern">Id must be numeric</small>
+                </div>
+            </div>
+        </td>
+      </tr>
+      <tr>
+        <td scope="row">Enter Amount : </td>
+        <td>
+            <div class="form-group">
+                <input type="text" required #amountField="ngModel" pattern="^[1-9][0-9]{0,4}$"
+                [class.is-invalid]="amountField.invalid && amountField.touched" class="form-control" name="amount" [(ngModel)]="amount">
+                <div class="text-danger" *ngIf="amountField.invalid && amountField.touched">
+                    <small *ngIf="amountField.errors.required">Amount is required</small>
+                    <small *ngIf="amountField.errors.pattern">Amount lies between 1 to 99,999 rupees</small>
+                </div>
+            </div>
+        </td>
+      </tr>
+      <tr>
+        <td colspan="2" style="text-align:center;" >
+            <button class="btn btn-outline-success" type="submit" [disabled]="recId.invalid && amountField.invalid">Send</button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</form>
+
+  <div *ngIf="account!==null" style="text-align:center">
+    <h4 class="text-success">Money Transferred Successfully</h4>  
+    Upadated Balance = {{account.accountBalance}}
+  </div>
+  <div *ngIf="flag" style="text-align:center" class="text-danger">
+    {{errormsg}}
+  </div>
+
+
+
+
+<!-- <div>
     <h1>Send Money</h1>
-    <form #sendMoneyForm="ngForm"  (ngSubmit)="sendMoney(sendMoneyForm)">
+    <form #sendMoneyForm="ngForm"  (ngSubmit)="sendMoney(sendMoneyForm)" novalidate>
         <div class="form-group">
             <label>Enter Reciever Id : - </label>
             <input type="text"  required class="form-control" #recId="ngModel" pattern="^\d{1,}$"
@@ -35,4 +88,4 @@
 </div>
 <div *ngIf="flag">
     {{errormsg}}
-</div>
+</div> -->

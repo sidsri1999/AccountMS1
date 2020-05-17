@@ -47,7 +47,8 @@ export class SendMoneyComponent implements OnInit {
         this.transaction=new Transaction();
         this.transaction.recieverAccountId=recieverAccountId;
         this.transaction.amount = amount;
-
+        this.account=null;
+        this.flag=false;
         let result:Observable<Account>=this.accountService.sendMoney(this.userId,this.transaction); 
         result.subscribe((account:Account)=>{
           this.account=account;

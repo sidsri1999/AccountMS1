@@ -1,6 +1,36 @@
-<h1>Welcome</h1>
+<nav class="navbar navbar-expand-lg navbar-light" style="background-color: #e3f2fd;">
+    <div class="navbar-brand" >Online Wallet</div>
+    <!-- <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="showUser()" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button> -->
+    <div class="collapse navbar-collapse" id="navbarNav">
+      <ul class="navbar-nav">
+        <li class="nav-item active">
+            <button class="btn btn-outline-success" type="button" (click)="showHome()">Home</button>
+        </li>
+        <li class="nav-item">
+            <button class="btn btn-outline-success" type="button" (click)="addMoney()">Add Money</button>
+        </li>
+        <li class="nav-item">
+            <button class="btn btn-outline-success" type="button" (click)="sendMoney()">Send Money</button>
+        </li>
+        <li class="nav-item">
+            <button class="btn btn-outline-success" type="button" (click)="showAccount()">Account Details</button>
+        </li>
+        <li class="nav-item">
+            <button class="btn btn-outline-success" type="button" (click)="showUser()">User Details</button>
+        </li>
+      </ul>
+    </div>
+  </nav>
+  <router-outlet ></router-outlet>
+
+
+
+
+<!-- <h1>Welcome</h1>
 <button (click)="showUser()">User Details</button>
 <button (click)="showAccount()">Account Details</button>
 <button (click)="addMoney()">Add Money</button>
 <button (click)="sendMoney()">Send Money</button>
-<router-outlet ></router-outlet>
+<router-outlet ></router-outlet> -->

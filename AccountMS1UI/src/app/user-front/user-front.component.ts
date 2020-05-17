@@ -19,6 +19,10 @@ export class UserFrontComponent implements OnInit {
     });
   }
 
+  showHome(){
+    this.router.navigate(['home'], {relativeTo : this.route})
+  }
+
   showUser(){
     this.router.navigate(['userdetails',{ id : this.userId}], {relativeTo : this.route})
   }

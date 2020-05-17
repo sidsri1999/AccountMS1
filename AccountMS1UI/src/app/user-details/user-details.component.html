@@ -1,9 +1,40 @@
-<div *ngIf="!flag">
-    <h3>Account Details</h3>
+<div style="text-align: center;">
+  <br><h2>User Details</h2><br>
+</div>
+<table *ngIf="user!==null" class="table table-borderless table-sm" style="margin: auto;width: 40% !important; ">
+    <tbody>
+      <tr>
+        <td scope="row">User Id : </td>
+        <td>
+            {{user.userId}}
+        </td>
+      </tr>
+      <tr>
+        <td scope="row">User Name : </td>
+        <td>
+            {{user.userName}}
+        </td>
+      </tr>
+      <tr>
+        <td scope="row">PhoneNumber : </td>
+        <td>
+            {{user.phoneNumber}}
+        </td>
+      </tr>
+    </tbody>
+  </table>
+
+    <div *ngIf="flag" style="text-align: center;" class="text-danger">
+        {{errormsg}}
+    </div> 
+
+    
+<!-- <div *ngIf="!flag">
+    <h3>User Details</h3>
     User Id : {{user.userId}}<br>
     User Name : {{user.userName}} <br>
     User Phone Number : {{user.phoneNumber}} <br>
 </div>
 <div *ngIf="flag">
     {{errormsg}}
-</div>
+</div> -->

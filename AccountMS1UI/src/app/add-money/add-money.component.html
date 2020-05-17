@@ -1,6 +1,47 @@
-<div>
+<div style="text-align: center;">
+    <br><h3>Add Money</h3><br>
+</div>
+<form #addMoneyForm="ngForm"  (ngSubmit)="addMoney(addMoneyForm)" novalidate>
+<table class="table table-borderless" style="margin: auto;width: 50% !important; ">
+    <tbody>
+      <tr>
+        <td scope="row" >Enter Amount : </td>
+        <td>
+            <div class="form-group">
+                <input type="text" required #amountField="ngModel" pattern="^[1-9][0-9]{0,4}$"
+                [class.is-invalid]="amountField.invalid && amountField.touched" class="form-control" name="amount" ngModel>
+                <div class="text-danger" *ngIf="amountField.invalid && amountField.touched">
+                    <small *ngIf="amountField.errors.required">Amount is required</small>
+                    <small *ngIf="amountField.errors.pattern">Amount lies between 1 to 99,999 rupees</small>
+                </div>
+            </div>
+        </td>
+      </tr>
+      <tr>
+        <td colspan="2" style="text-align:center;">
+            <button class="btn btn-outline-success" type="submit" [disabled]="amountField.invalid">Add</button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</form>
+
+  <div *ngIf="account!==null" style="text-align:center">
+    <h4 class="text-success">Amount Added Successfully</h4>  
+    Upadated Balance = {{account.accountBalance}}
+  </div>
+  <div *ngIf="flag" style="text-align:center" class="text-danger">
+    {{errormsg}}
+  </div>
+
+
+
+
+
+
+<!-- <div>
     <h1>Add Money</h1>
-    <form #addMoneyForm="ngForm"  (ngSubmit)="addMoney(addMoneyForm)">
+    <form #addMoneyForm="ngForm"  (ngSubmit)="addMoney(addMoneyForm)" novalidate>
         <div class="form-group">
             <label>Enter Amount : - </label>
             <input type="text" required #amountField="ngModel" pattern="^[1-9][0-9]{0,4}$"
@@ -14,10 +55,10 @@
         <button type="submit">Submit</button>
     </form>
 </div>
-<div *ngIf="account!==null">
-    <h3>Amount Added Successfully</h3>  
-    Current Amount {{account.accountBalance}}
+<div *ngIf="account!==null" style="text-align:center">
+    <h4>Amount Added Successfully</h4>  
+    Upadated Balance {{account.accountBalance}}
 </div>
-<div *ngIf="flag">
+<div *ngIf="flag" style="text-align:center">
     {{errormsg}}
-</div>
+</div> -->

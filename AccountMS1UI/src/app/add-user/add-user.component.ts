@@ -32,7 +32,8 @@ export class AddUserComponent implements OnInit {
         this.addUserData.userName = userName;
         this.addUserData.password = password;
         this.addUserData.phoneNumber = phoneNumber;
-        
+        this.addedUser=null;
+        this.flag=false;
         
         let result=this.userService.addUser(this.addUserData); 
         result.subscribe((user:User)=>{
@@ -41,7 +42,9 @@ export class AddUserComponent implements OnInit {
         err=>{
           this.flag = true;
           console.log("err="+err);
-          this.errormsg=err.error;
+          this.errormsg="User Already Exists!";
+          console.log("Hello" + this.errormsg);
+
         } );
         form.reset();
         

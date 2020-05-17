@@ -8,6 +8,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -30,7 +31,7 @@ import com.cg.exceptions.UserDoesNotExistsException;
 import com.cg.services.AccountServiceImpl;
 import com.cg.services.UserServiceImpl;
 
-
+//@CrossOrigin(origins = {"http://localhost:4200"})
 @RestController
 @RequestMapping("/users")
 public class WalletUserController {
@@ -44,11 +45,14 @@ public class WalletUserController {
 	
 	@PostMapping("/add")
 	ResponseEntity<WalletUserDto> addUser(@RequestBody WalletUserDto userDto){
+		System.out.println("From Angular" + userDto);
 		WalletUser user = new WalletUser();
 		user.setUserName(userDto.getUserName());
 		user.setPassword(userDto.getPassword());
 		user.setPhoneNumber(userDto.getPhoneNumber());
+		System.out.println(user);
 		WalletUser user1 = userService.addUser(user);
+		System.out.println(user1);
 		WalletUserDto userDto1 = new WalletUserDto();
 		userDto1.setUserId(user1.getUserId());
 		userDto1.setUserName(user1.getUserName());
@@ -57,6 +61,7 @@ public class WalletUserController {
 		userDto1.setAccountId(user1.getWalletAccount().getAccountId());
 		userDto1.setAccountBalance(user1.getWalletAccount().getAccountBalance());
 		userDto1.setStatus(user1.getWalletAccount().getStatus());
+		System.out.println(userDto1);
 		ResponseEntity<WalletUserDto> response = new ResponseEntity<WalletUserDto>(userDto1,HttpStatus.OK);
 		return response;
 	}
@@ -103,6 +108,18 @@ public class WalletUserController {
 		}
 		System.out.println(userDtos);
 		ResponseEntity<List<WalletUserDto>> response = new ResponseEntity<List<WalletUserDto>>(userDtos,HttpStatus.OK);
+		return response;
+	}
+	
+	@GetMapping("/getalluserids")
+	ResponseEntity<List<Integer>> getAllUserIds(){
+		List<WalletUser> users = userService.getAllUsers();
+		List<Integer> userIds = new ArrayList<Integer>();
+		for(WalletUser walletUser : users) {
+			userIds.add(walletUser.getUserId());
+		}
+		System.out.println(userIds);
+		ResponseEntity<List<Integer>> response = new ResponseEntity<List<Integer>>(userIds,HttpStatus.OK);
 		return response;
 	}
 	
@@ -153,7 +170,7 @@ public class WalletUserController {
 	public ResponseEntity<String> handleExceptionAccountDoesNotExists(AccountDoesNotExistsException exception){
 		log.error("User Exception",exception);
 		 String msg = exception.getMessage();
-	     ResponseEntity<String> response = new ResponseEntity<>(msg, HttpStatus.NOT_ACCEPTABLE);
+	     ResponseEntity<String> response = new ResponseEntity<>(msg, HttpStatus.NOT_FOUND);
 	     return response;
 	}
 	
@@ -161,7 +178,7 @@ public class WalletUserController {
 	public ResponseEntity<String> handleExceptionInsufficientFunds(InsufficientFundsException exception){
 		log.error("User Exception",exception);
 		 String msg = exception.getMessage();
-	     ResponseEntity<String> response = new ResponseEntity<>(msg, HttpStatus.NOT_ACCEPTABLE);
+	     ResponseEntity<String> response = new ResponseEntity<>(msg, HttpStatus.NOT_FOUND);
 	     return response;
 	}
 	
@@ -169,7 +186,7 @@ public class WalletUserController {
 	public ResponseEntity<String> handleExceptionUserDoesNotExists(UserDoesNotExistsException exception){
 		log.error("User Exception",exception);
 		 String msg = exception.getMessage();
-	     ResponseEntity<String> response = new ResponseEntity<>(msg, HttpStatus.NOT_ACCEPTABLE);
+	     ResponseEntity<String> response = new ResponseEntity<>(msg, HttpStatus.NOT_FOUND);
 	     return response;
 	}
 	
@@ -177,7 +194,7 @@ public class WalletUserController {
 	public ResponseEntity<String> handleExceptionInvalidCredentials(InvalidCredentialsException exception){
 		log.error("User Exception",exception);
 		 String msg = exception.getMessage();
-	     ResponseEntity<String> response = new ResponseEntity<>(msg, HttpStatus.NOT_ACCEPTABLE);
+	     ResponseEntity<String> response = new ResponseEntity<>(msg, HttpStatus.NOT_FOUND);
 	     return response;
 	}
 	

@@ -25,27 +25,34 @@ public class UserServiceImpl implements IUserService {
 
 	@Override
 	public WalletUser addUser(WalletUser user1) {
+		System.out.println(user1);
 		List<WalletUser> users = getAllUsers();
+		System.out.println("All Users"+users);
+		System.out.println("Hello 1");
 		for(WalletUser user : users) {
 			if(user.getPhoneNumber().equals(user1.getPhoneNumber())){
 				throw new UserAlreadyExistsException("User with this phone no: already exists!!");
 			}
 		}
 		WalletUser user2 = userRepo.save(user1);
+		System.out.println("Hello2"+user2);
 		int userId = user2.getUserId();
 		WalletAccount account = accountService.addAccount(userId);
 		WalletUser user3 = userRepo.getOne(userId);
 		user3.setWalletAccount(account);
 		WalletUser user4 = userRepo.save(user3);
+		System.out.println(user4);
 		return user4;
 	}
 
 	@Override
 	public WalletUser getUser(int userId) {
-		WalletUser user = userRepo.getOne(userId);;
-		if(user==null) {
+		System.out.println("Hello");
+		Boolean exists = userRepo.existsById(userId);;
+		if(exists==false) {
 			throw new UserDoesNotExistsException("User does not exists");
 		}
+		WalletUser user = userRepo.getOne(userId);
 		return user;
 	}
 	

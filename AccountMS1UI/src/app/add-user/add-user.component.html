@@ -2,10 +2,10 @@
     <br><h2>User Registration</h2><br>
 </div>
 <form #userForm="ngForm"  (ngSubmit)="addUser(userForm)" novalidate>
-<table class="table table-borderless" style="margin: auto;width: 40% !important; ">
+<table class="table table-borderless" style="margin: auto;width: 50% !important; ">
     <tbody>
       <tr>
-        <td scope="row">Enter UserName : </td>
+        <td scope="row">Enter UserName </td>
         <td>
             <div class="form-group">
                 <input type="text" #name="ngModel" pattern="^[a-zA-Z\\.\\ ]{2,}$" required name="name"
@@ -18,7 +18,7 @@
         </td>
       </tr>
       <tr>
-        <td scope="row">Enter Password : </td>
+        <td scope="row">Enter Password </td>
         <td>
             <div class="form-group">
                 <input type="password" #password="ngModel" required pattern="^[a-zA-Z0-9]{5,15}$" name="password"
@@ -31,7 +31,7 @@
         </td>
       </tr>
       <tr>
-        <td scope="row">Confirm Password : </td>
+        <td scope="row">Confirm Password </td>
         <td>
             <div class="form-group">
                 <input type="password" required #cpassword="ngModel" pattern="^{{password.value}}$" 
@@ -45,7 +45,7 @@
         </td>
       </tr>
       <tr>
-        <td scope="row">Enter PhoneNumber : </td>
+        <td scope="row">Enter PhoneNumber </td>
         <td>
             <div class="form-group">
                 <input type="tel" #phone="ngModel" required pattern="^[6789]{1}[0-9]{9}$" name="phone"

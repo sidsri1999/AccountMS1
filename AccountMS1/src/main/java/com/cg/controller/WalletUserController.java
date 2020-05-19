@@ -8,7 +8,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -45,14 +44,11 @@ public class WalletUserController {
 	
 	@PostMapping("/add")
 	ResponseEntity<WalletUserDto> addUser(@RequestBody WalletUserDto userDto){
-		System.out.println("From Angular" + userDto);
 		WalletUser user = new WalletUser();
 		user.setUserName(userDto.getUserName());
 		user.setPassword(userDto.getPassword());
 		user.setPhoneNumber(userDto.getPhoneNumber());
-		System.out.println(user);
 		WalletUser user1 = userService.addUser(user);
-		System.out.println(user1);
 		WalletUserDto userDto1 = new WalletUserDto();
 		userDto1.setUserId(user1.getUserId());
 		userDto1.setUserName(user1.getUserName());
@@ -61,7 +57,6 @@ public class WalletUserController {
 		userDto1.setAccountId(user1.getWalletAccount().getAccountId());
 		userDto1.setAccountBalance(user1.getWalletAccount().getAccountBalance());
 		userDto1.setStatus(user1.getWalletAccount().getStatus());
-		System.out.println(userDto1);
 		ResponseEntity<WalletUserDto> response = new ResponseEntity<WalletUserDto>(userDto1,HttpStatus.OK);
 		return response;
 	}
@@ -80,15 +75,12 @@ public class WalletUserController {
 	
 	@GetMapping("/{userId}/account")
 	ResponseEntity<WalletAccountDto> getAccount(@PathVariable("userId") int userId){
-		System.out.println(userId);
 		WalletAccount account = accountService.getAccount(userId);
-		System.out.println("Helllo");
 		WalletAccountDto walletDto = new WalletAccountDto();
 		walletDto.setAccountId(account.getAccountId());
 		walletDto.setAccountBalance(account.getAccountBalance());
 		walletDto.setStatus(account.getStatus());
 		ResponseEntity<WalletAccountDto> response = new ResponseEntity<WalletAccountDto>(walletDto,HttpStatus.OK);
-		System.out.println("Helllo2");
 		return response;
 	}
 	
@@ -106,7 +98,6 @@ public class WalletUserController {
 			walletDto.setStatus(walletUser.getWalletAccount().getStatus());
 			userDtos.add(walletDto);
 		}
-		System.out.println(userDtos);
 		ResponseEntity<List<WalletUserDto>> response = new ResponseEntity<List<WalletUserDto>>(userDtos,HttpStatus.OK);
 		return response;
 	}
@@ -118,7 +109,6 @@ public class WalletUserController {
 		for(WalletUser walletUser : users) {
 			userIds.add(walletUser.getUserId());
 		}
-		System.out.println(userIds);
 		ResponseEntity<List<Integer>> response = new ResponseEntity<List<Integer>>(userIds,HttpStatus.OK);
 		return response;
 	}
@@ -133,8 +123,7 @@ public class WalletUserController {
 		ResponseEntity<Void> response = new ResponseEntity<Void>(HttpStatus.OK);
 		return response;
 	}
-	//org.springframework.http.converter.HttpMessageConversionException
-	//Not returning response
+	
 	@PutMapping("/{accountId}/account/addmoney")
 	ResponseEntity<WalletAccountDto> addMoney(@PathVariable("accountId") int accountId,@RequestBody TransactionDto transactionDto){
 		WalletAccount account = accountService.addMoney(accountId, transactionDto);
@@ -143,7 +132,6 @@ public class WalletUserController {
 		walletDto.setAccountBalance(account.getAccountBalance());
 		walletDto.setStatus(account.getStatus());
 		ResponseEntity<WalletAccountDto> response = new ResponseEntity<WalletAccountDto>(walletDto,HttpStatus.OK);
-		System.out.println(response);
 		return response;
 	}
 	
@@ -160,7 +148,7 @@ public class WalletUserController {
 	
 	@ExceptionHandler(UserAlreadyExistsException.class)
 	public ResponseEntity<String> handleExceptionUserAlreadyExists(UserAlreadyExistsException exception){
-		log.error("User Exception",exception);
+		 log.error("User Already Exists Exception",exception);
 		 String msg = exception.getMessage();
 	     ResponseEntity<String> response = new ResponseEntity<>(msg, HttpStatus.NOT_ACCEPTABLE);
 	     return response;
@@ -168,7 +156,7 @@ public class WalletUserController {
 	
 	@ExceptionHandler(AccountDoesNotExistsException.class)
 	public ResponseEntity<String> handleExceptionAccountDoesNotExists(AccountDoesNotExistsException exception){
-		log.error("User Exception",exception);
+		 log.error("Account Does Not Exists Exception",exception);
 		 String msg = exception.getMessage();
 	     ResponseEntity<String> response = new ResponseEntity<>(msg, HttpStatus.NOT_FOUND);
 	     return response;
@@ -176,7 +164,7 @@ public class WalletUserController {
 	
 	@ExceptionHandler(InsufficientFundsException.class)
 	public ResponseEntity<String> handleExceptionInsufficientFunds(InsufficientFundsException exception){
-		log.error("User Exception",exception);
+		 log.error("Insufficient Funds Exception",exception);
 		 String msg = exception.getMessage();
 	     ResponseEntity<String> response = new ResponseEntity<>(msg, HttpStatus.NOT_FOUND);
 	     return response;
@@ -184,7 +172,7 @@ public class WalletUserController {
 	
 	@ExceptionHandler(UserDoesNotExistsException.class)
 	public ResponseEntity<String> handleExceptionUserDoesNotExists(UserDoesNotExistsException exception){
-		log.error("User Exception",exception);
+		 log.error("User Does Not Exists Exception",exception);
 		 String msg = exception.getMessage();
 	     ResponseEntity<String> response = new ResponseEntity<>(msg, HttpStatus.NOT_FOUND);
 	     return response;
@@ -192,7 +180,7 @@ public class WalletUserController {
 	
 	@ExceptionHandler(InvalidCredentialsException.class)
 	public ResponseEntity<String> handleExceptionInvalidCredentials(InvalidCredentialsException exception){
-		log.error("User Exception",exception);
+		 log.error("Invalid Credentials Exception",exception);
 		 String msg = exception.getMessage();
 	     ResponseEntity<String> response = new ResponseEntity<>(msg, HttpStatus.NOT_FOUND);
 	     return response;
@@ -206,3 +194,24 @@ public class WalletUserController {
         return response;
     }
 }
+
+
+
+//@Value("${transactionServiceUrl}")
+//private String transactionUrl;
+
+//ResponseEntity<TransactionDto[]> getTransactions() {
+//	String url = transactionUrl + "/get";
+//	ResponseEntity<TransactionDto[]> response = restTemplate.getForEntity(url, TransactionDto[].class);
+//	return response;
+//}
+//
+//ResponseEntity<TransactionDto> getTransaction() {
+//	String url = transactionUrl + "/get";
+//	TransactionDto transactions = restTemplate.getForObject(url, TransactionDto.class);
+//	ResponseEntity<TransactionDto> response = new ResponseEntity<TransactionDto>(transactions,HttpStatus.OK);
+//	return response;
+//}
+//
+//@Autowired
+//private RestTemplate restTemplate;

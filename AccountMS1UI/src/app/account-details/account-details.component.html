@@ -1,32 +1,33 @@
 <div style="text-align: center;">
   <br><h2>Account Details</h2><br>
 </div>
-<table *ngIf="account!==null" class="table table-borderless table-sm" style="margin: auto;width: 40% !important; ">
-    <tbody>
-      <tr>
-        <td scope="row">Account Id : </td>
-        <td>
-            {{account.accountId}}
-        </td>
-      </tr>
-      <tr>
-        <td scope="row">Account Balance : </td>
-        <td>
-            {{account.accountBalance}}
-        </td>
-      </tr>
-      <tr>
-        <td scope="row">Account Status : </td>
-        <td>
-            {{account.status}}
-        </td>
-      </tr>
-    </tbody>
-  </table>
 
-    <div *ngIf="flag" style="text-align: center;" class="text-danger">
-        {{errormsg}}
-    </div> 
+<table *ngIf="account!==null" class="table table-borderless table-sm" style="margin: auto;width: 40% !important; ">
+  <tbody>
+    <tr>
+      <td>Account Id </td>
+      <td>
+          {{account.accountId}}
+      </td>
+    </tr>
+    <tr>
+      <td>Account Balance </td>
+      <td>
+          {{account.accountBalance}}
+      </td>
+    </tr>
+    <tr>
+      <td>Account Status </td>
+      <td>
+          {{account.status}}
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+<div *ngIf="flag" style="text-align: center;" class="text-danger">
+  {{errormsg}}
+</div> 
 
 
 

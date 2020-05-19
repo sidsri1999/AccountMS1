@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { UserService } from '../services/user.service';
 import { Account } from '../model/account';
 import { ActivatedRoute, ParamMap } from '@angular/router';
 import { AccountService } from '../services/account.service';
@@ -15,10 +14,10 @@ export class AccountDetailsComponent implements OnInit {
   public userId;
   public flag : boolean = false;
   public errormsg : String;
-
-  constructor(private accountService : AccountService,private route : ActivatedRoute) {
-  }
   public account : Account = null;
+
+  constructor(private accountService : AccountService,private route : ActivatedRoute){}
+  
   ngOnInit(): void {
 
       this.route.paramMap.subscribe((params : ParamMap) => {
@@ -30,7 +29,13 @@ export class AccountDetailsComponent implements OnInit {
       let result : Observable<Account> =this.accountService.getAccount(this.userId); 
       console.log(result);
       result.subscribe((account:Account)=>{
+        console.log(account);
         this.account=account;
+        console.log(this.account);
+        // if(this.account.accountBalance==null){
+        //   this.account.accountBalance=0.0;
+        //   console.log(this.account.accountBalance);
+        // }
       },
       err=>{
         this.flag = true;

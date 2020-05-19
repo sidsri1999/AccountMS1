@@ -10,6 +10,7 @@ import com.cg.dto.TransactionDto;
 import com.cg.entities.WalletAccount;
 import com.cg.exceptions.AccountDoesNotExistsException;
 import com.cg.exceptions.InsufficientFundsException;
+import com.cg.exceptions.InvalidCredentialsException;
 import com.cg.util.Status;
 
 @Service
@@ -47,9 +48,11 @@ public class AccountServiceImpl implements IAccountService {
 		if(senderExists==false) {
 			throw new AccountDoesNotExistsException("User  does not exists");
 		}
+		if(senderAccountId==transactionDto.getRecieverAccountId()) {
+			throw new InvalidCredentialsException("Invalid Credentials !");
+		}
 		WalletAccount senderAccount = accountRepo.getOne(senderAccountId);
 		Boolean recieverExists = accountRepo.existsById(transactionDto.getRecieverAccountId());
-		System.out.println(recieverExists);
 		if(recieverExists==false) {
 			throw new AccountDoesNotExistsException("User with accountId "+transactionDto.getRecieverAccountId()+" does not exists");
 		}
@@ -72,7 +75,6 @@ public class AccountServiceImpl implements IAccountService {
 			throw new AccountDoesNotExistsException("User with accountId "+accountId+" does not exists");
 		}
 		WalletAccount account = accountRepo.getOne(accountId);
-		System.out.println(account);
 		return account;
 		
 	}

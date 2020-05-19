@@ -34,10 +34,11 @@ export class AddUserComponent implements OnInit {
         this.addUserData.phoneNumber = phoneNumber;
         this.addedUser=null;
         this.flag=false;
-        
+       
         let result=this.userService.addUser(this.addUserData); 
         result.subscribe((user:User)=>{
           this.addedUser=user;
+          console.log(this.addedUser);
         },
         err=>{
           this.flag = true;

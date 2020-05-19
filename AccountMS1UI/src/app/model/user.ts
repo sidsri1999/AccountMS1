@@ -3,5 +3,5 @@ export class User {
     userName : String;
     password : String;
     phoneNumber : String;
-    account : Account;
+    //account : Account;
 }

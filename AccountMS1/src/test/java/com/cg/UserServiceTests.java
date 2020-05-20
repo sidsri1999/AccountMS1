@@ -22,14 +22,10 @@ import com.cg.services.UserServiceImpl;
 @DataJpaTest
 @ExtendWith(SpringExtension.class)
 @Import({UserServiceImpl.class,AccountServiceImpl.class})
-@AutoConfigureTestDatabase(replace = Replace.NONE)
 class UserServiceTests {
 	
 	@Autowired
 	private IUserService userService;
-	
-	@Autowired
-	private IAccountService accountService;
 	
 	@Autowired
 	EntityManager entityManager;
@@ -42,10 +38,7 @@ class UserServiceTests {
 		user.setPhoneNumber("12345544321"); 
 		WalletUser result = userService.addUser(user);
 		List<WalletUser> fetched = entityManager.createQuery("from WalletUser").getResultList();
-        int size = fetched.size();
-        WalletUser expected = fetched.get(size-1);
-        System.out.println(expected);
-        System.out.println(result);
+        WalletUser expected = fetched.get(0);
         Assertions.assertEquals(expected, result);
 	}
 	
@@ -54,42 +47,35 @@ class UserServiceTests {
 		WalletUser user = new WalletUser();
 		user.setUserName("Siddhant");
 		user.setPassword("sidsri");
-		user.setPhoneNumber("12345544321"); 
-		WalletUser user1 = userService.addUser(user);
-		List<WalletUser> fetched = entityManager.createQuery("from WalletUser").getResultList();
-        int size = fetched.size();
-        WalletUser expected = fetched.get(size-1);
-        WalletUser result = userService.getUser(user1.getUserId());
-        System.out.println(expected);
-        System.out.println(result);
-        Assertions.assertEquals(expected, result);
+		user.setPhoneNumber("12345544321");
+		user = entityManager.merge(user);
+		int id = user.getUserId();
+		WalletUser result = userService.getUser(id);
+		Assertions.assertEquals(user, result);
 	}
 	
 	@Test
 	public void testGetAllUser() {
 		List<WalletUser> expected = entityManager.createQuery("from WalletUser").getResultList();
         List<WalletUser> result = userService.getAllUsers();
-        System.out.println(expected);
-        System.out.println(result);
         Assertions.assertEquals(expected, result);
 	}
 	
-//	@Test
-//	public void testChangePassword() {
-//		WalletUser user = new WalletUser();
-//		user.setUserName("Siddhant");
-//		user.setPassword("sidsri");
-//		user.setPhoneNumber("12345544321"); 
-//		WalletUser user1 = userService.addUser(user);
-//		WalletUser user2
-//		WalletUser user3 = userService.changePassword(user1.getUserId(), user1)
-//		List<WalletUser> fetched = entityManager.createQuery("from WalletUser").getResultList();
-//        int size = fetched.size();
-//        WalletUser expected = fetched.get(size-1);
-//        WalletUser result = userService.getUser(user1.getUserId());
-//        System.out.println(expected);
-//        System.out.println(result);
-//        Assertions.assertEquals(expected, result);
-//	}
+	@Test
+	public void testChangePassword() {
+		WalletUser user = new WalletUser();
+		user.setUserName("Siddhant");
+		user.setPassword("sidsri");
+		user.setPhoneNumber("12345544321"); 
+		user = entityManager.merge(user);
+		int id = user.getUserId();
+		WalletUser expected = new WalletUser();
+		expected.setUserId(id);
+		expected.setUserName("Siddhant");
+		expected.setPassword("abcdef");
+		expected.setPhoneNumber("12345544321");
+		WalletUser result = userService.changePassword(id,expected);
+        Assertions.assertEquals(expected, result);
+	}
 
 }

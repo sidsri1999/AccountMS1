@@ -28,6 +28,8 @@ import com.cg.exceptions.InvalidCredentialsException;
 import com.cg.exceptions.UserAlreadyExistsException;
 import com.cg.exceptions.UserDoesNotExistsException;
 import com.cg.services.AccountServiceImpl;
+import com.cg.services.IAccountService;
+import com.cg.services.IUserService;
 import com.cg.services.UserServiceImpl;
 
 //@CrossOrigin(origins = {"http://localhost:4200"})
@@ -38,9 +40,9 @@ public class WalletUserController {
 	private static final Logger log = LoggerFactory.getLogger(WalletUserController.class); 
 	
 	@Autowired
-	private UserServiceImpl userService;
+	private IUserService userService;
 	@Autowired
-	private AccountServiceImpl accountService;
+	private IAccountService accountService;
 	
 	@PostMapping("/add")
 	ResponseEntity<WalletUserDto> addUser(@RequestBody WalletUserDto userDto){

@@ -21,7 +21,7 @@ public class UserServiceImpl implements IUserService {
 	@Autowired
 	WalletUserRepo userRepo;
 	@Autowired
-	IAccountService accountService;	//AccountServiceImpl accountService;
+	IAccountService accountService;	
 
 	@Override
 	public WalletUser addUser(WalletUser user1) {
@@ -32,7 +32,6 @@ public class UserServiceImpl implements IUserService {
 			}
 		}
 		WalletUser user2 = userRepo.save(user1);
-		//System.out.println("Hello2"+user2);
 		int userId = user2.getUserId();
 		WalletAccount account = accountService.addAccount(userId);
 		WalletUser user3 = userRepo.getOne(userId);
@@ -44,7 +43,6 @@ public class UserServiceImpl implements IUserService {
 
 	@Override
 	public WalletUser getUser(int userId) {
-		//System.out.println("Hello");
 		Boolean exists = userRepo.existsById(userId);;
 		if(exists==false) {
 			throw new UserDoesNotExistsException("User does not exists");
